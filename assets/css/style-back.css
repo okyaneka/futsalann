@@ -1,0 +1,99 @@
+html {
+	font-family: 'Open Sans';
+}
+
+body {
+	background: #AAFFAA;
+}
+
+#home {
+	background: url('../images/header-background.jpg') no-repeat center;
+	background-size: cover;
+}
+
+.overlay {
+	background: #3336;
+}
+
+.profile img {
+	max-width: 100%;
+}
+
+/*
+ * Footer
+ */
+
+footer ul {
+	list-style: none;
+}
+
+footer li a {
+	color: #FFFC;
+}
+
+footer li a:hover {
+	color: #FFF;
+	text-decoration: underline;
+}
+
+/*
+ * Calendar
+ */
+.calendar {
+	background: #FAFAFA;
+}
+.clndr-controls div {
+	display: inline-block;
+}
+.clndr-control-button {
+	padding: 10px;
+	cursor: pointer;
+	float: left;
+}
+.clndr-control-button.rightalign {
+	float: right !important;
+}
+.clndr-controls {
+	padding: 0 24px;
+	background: #eee;
+}
+.month {
+	padding: 16px;
+}
+.header-days {
+	font-weight: 800;
+	cursor: default;
+}
+.day {
+	cursor: pointer;
+}
+.day.past {
+	cursor: default;
+}
+.day:hover {
+	background: #3331;
+}
+.day.selected {
+	background: #3332;
+}
+.adjacent-month, .day.past {
+	background: #3333;
+}
+
+/*
+ * Large screen
+ */
+@media screen and (max-width: 992px) {
+	.user-menu li a{
+		border: 0px !important;
+	}
+
+	.user-menu {
+		margin-bottom: 8px;
+	}
+
+	footer .col-lg {
+		margin-bottom: 1rem;
+		border-bottom: 1px solid #f8f9fa;
+	}
+}
