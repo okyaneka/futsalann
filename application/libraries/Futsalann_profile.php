@@ -70,6 +70,6 @@ class Futsalann_profile {
 		{
 			$photo = 'blank_user.png';
 		}
-		return '<div class="col-md-12"><div class="wrapper oval m-b-15"><img src="'.base_url('assets/images/'.$photo).'"></div></div>';
+		return '<div class="col-md-12"><div class="img-wrapper oval m-b-15"><img src="'.base_url('assets/images/'.$photo).'"></div></div>';
 	}
 }

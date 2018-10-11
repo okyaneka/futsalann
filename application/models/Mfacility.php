@@ -31,7 +31,6 @@ class Mfacility extends CI_Model
 			{
 				$facility_id = $this->db->get_where('facility','slug="'.$facility['slug'].'"')->row()->id;
 			}
-			
 
 			if ( ! empty($field_id)) 
 			{
@@ -43,7 +42,6 @@ class Mfacility extends CI_Model
 			if ($this->db->get('user_facility')->num_rows() == FALSE) {
 				$this->db->insert('user_facility',['user_id' => $this->session->user_id, 'facility_id' => $facility_id]);
 			}
-
 
 			return $facility_id;
 		}
@@ -102,7 +100,17 @@ class Mfacility extends CI_Model
 
 	public function delete($id='')
 	{
-		return $this->db->delete('facility','id='.$id);
+		// nyambung di user dan nyambung di lapangan yg dimiliki user
+		$this->db->delete('user_facility','facility_id='.$id);
+
+		$this->db->select('id');
+		$field_id = $this->db->get_where('field','user_id='.$this->session->user_id)->result_array();
+		$this->db->where('facility_id=',$id);
+		foreach ($field_id as $id) {
+			$this->db->where('field_id', $id['id']);
+			$this->db->delete('field_facility');
+		}
+		// return 
 	}
 	
 	public function delete_all($field_id='')

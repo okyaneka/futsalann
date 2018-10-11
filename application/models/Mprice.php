@@ -28,7 +28,7 @@ class Mprice extends CI_Model
 			$data['type_id'] = '1';
 			$this->db->insert('field_price',$data);
 		}
-		else
+		elseif ( ! (isset($data['start']) && isset($data['end'])))
 		{
 			foreach ($data as $item) 
 			{

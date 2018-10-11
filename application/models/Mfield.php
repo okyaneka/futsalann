@@ -23,24 +23,12 @@ class Mfield extends CI_Model
 			$no_sku = (count($sku) == 0) ? 0 : $sku[count($sku)-1]['sku'];
 			$no = substr($no_sku, 4)+1;
 			switch (strlen($no)) {
-				case 0:
-					$data['sku'] = 'SKU_0000'.$no;
-					break;
-				case 1:
-					$data['sku'] = 'SKU_000'.$no;
-					break;
-				case 2:
-					$data['sku'] = 'SKU_00'.$no;
-					break;
-				case 3:
-					$data['sku'] = 'SKU_0'.$no;
-					break;
-				case 4:
-					$data['sku'] = 'SKU_'.$no;
-					break;
-				default:
-					$data['sku'] = 'SKU_'.$no;
-					break;
+				case 0: $data['sku'] = 'SKU_0000'.$no; break;
+				case 1: $data['sku'] = 'SKU_000'.$no; break;
+				case 2: $data['sku'] = 'SKU_00'.$no; break;
+				case 3: $data['sku'] = 'SKU_0'.$no; break;
+				case 4: $data['sku'] = 'SKU_'.$no; break;
+				default: $data['sku'] = 'SKU_'.$no; break;
 			}
 		}
 
@@ -55,7 +43,10 @@ class Mfield extends CI_Model
 		$this->insert_option($field_id, isset($data['option']) ? $data['option'] : array());
 
 		// $this->insert_gallery($field_id, isset($data['gallery']) ? $data['gallery'] : array());
-		$this->set_gallery($field_id, $data['gallery']);
+		if (isset($data['gallery'])) 
+		{
+			$this->set_gallery($field_id, $data['gallery']);
+		}
 
 		$this->mprice->insert_base_price($field_id,$data['baseprice']);
 		if (isset($data['price'])) 
@@ -74,19 +65,7 @@ class Mfield extends CI_Model
 			$this->mresource->insert($field_id, $data['res']);
 		}
 
-		if (isset($data['use_user_address']) && ($data['use_user_address'] == TRUE)) 
-		{
-			$data['address'] = $this->maddress->get_user($this->session->user_id);
-		}
-
-		if (isset($data['address'])) 
-		{
-			$this->maddress->insert_field($field_id, $data['address']);
-		} 
-		else 
-		{	
-			$this->maddress->insert_field($field_id);
-		}
+		$this->maddress->insert_field($field_id, $data['address']);
 
 		$lat = isset($data['lat']) ? $data['lat'] : '';
 		$long = isset($data['lpmg']) ? $data['long'] : '';
@@ -125,7 +104,8 @@ class Mfield extends CI_Model
 		$this->db->insert('field_gallery',array(
 			'file' => $filename,
 			'main' => $main,
-			'field_id' => $field_id
+			'field_id' => $field_id,
+			'user_id' => $this->session->user_id
 		));
 
 		return $this->db->insert_id();

@@ -1,0 +1,47 @@
+/*
+ * Field gallery
+ */
+
+.field-gallery {
+	border: 1px dotted #333;
+}
+
+.field-gallery .content {
+	max-height:200px;
+	overflow-y: auto;
+	min-height: initial;
+	padding: 0;
+}
+
+.field-gallery .thumbnail {
+	width: 150px;
+}
+
+.drop-text {
+	margin-top:30px;
+	color:grey;
+	font-size:25px;
+	font-weight:bold;
+}
+
+/*
+ * Facility
+ */
+
+.facility p {
+	display: inline-block;
+}
+
+
+.table {
+	overflow: hidden;
+}
+
+.table tr:hover .action-link {
+	left: 0
+}
+
+.action-link {
+	position: relative;
+	left: 9999px;
+}

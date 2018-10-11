@@ -115,7 +115,7 @@ class MY_Controller extends CI_Controller {
 			// 'file_name' 	=>
 			'file_ext_tolower' 	=> TRUE,
 			'overwrite'	=> FALSE,
-			// 'max_size' 		=> '1024',
+			'max_size' 		=> '1024',
 			// 'max_width'		=> '',
 			// 'max_height' 	=> '',
 			// 'min_width' 	=> '',

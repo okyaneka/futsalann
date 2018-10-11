@@ -31,7 +31,7 @@ class Futsalann_table {
 		}
 
 		$template = array(
-        'table_open'            => '<table id="field-table" class="table table-hover table-stripped">',
+        'table_open'            => '<table id="field-table" class="table table-hover table-bordered table-stripped">',
 
         // 'thead_open'            => '<thead>',
         // 'thead_close'           => '</thead>',
@@ -83,7 +83,7 @@ class Futsalann_table {
 			$sku		= 'sku : '.$row['sku'];
 			$action_link= '<p class="action-link"><small>'.$view_link.' | '.$edit_link.' | '.$delete_link.' | '.$sku.'</small></p>';
 
-			$checkbox 	= '<input class="check-all" type="checkbox" name="id" value="'.$row['id'].'">';
+			$checkbox 	= '<input type="checkbox" name="id[]" value="'.$row['id'].'">';
 			
 			$image_name	= $this->CI->mfield->get_main_image($row['id'])['file'];
 			$image 		= '<img style="height:4em" class="img-thumbnail" src="'.base_url('/assets/images/uploads/'.$image_name).'">';
@@ -160,7 +160,7 @@ class Futsalann_table {
 			$fac_id		= 'id : '.$row['id'];
 			$action_link= '<p class="action-link"><small>'.$edit_link.' | '.$delete_link.' | '.$fac_id.'</small></p>';
 
-			$checkbox 	= '<input class="check-all" type="checkbox" name="id" value="'.$row['id'].'">';
+			$checkbox 	= '<input type="checkbox" name="id[]" value="'.$row['id'].'">';
 			$nama 		= $row['name'].$action_link;
 			$slug 		= $row['slug'];
 			$deskripsi 	= $row['description'];

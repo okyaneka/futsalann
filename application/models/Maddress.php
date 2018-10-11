@@ -21,7 +21,7 @@ class Maddress extends CI_Model
 			$this->db->insert('field_meta',array(
 				'field_id' => $field_id,
 				'name' => $address,
-				'content' => isset($data['address']) ? $data['address'] : ''
+				'content' => isset($data[$address]) ? $data[$address] : ''
 			));
 		}
 		return $field_id;
@@ -33,7 +33,7 @@ class Maddress extends CI_Model
 			$this->db->insert('user_meta',array(
 				'user_id' => $user_id,
 				'name' => $address,
-				'content' => isset($data['address']) ? $data['address'] : ''
+				'content' => isset($data[$address]) ? $data[$address] : ''
 			));
 		}
 		return $user_id;

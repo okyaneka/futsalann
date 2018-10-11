@@ -3,11 +3,11 @@ $(document).ready(function() {
 	$('.custom-prices .add-row').click(function() {
 
 		var priceData 	= $('.custom-prices tbody tr');
-		if (priceData.add('.price-id').length == 0) {
-			var id 		= priceData.length;
-		} else {
+		if (priceData.find('.price-id').length > 0) {
 			var id 		= parseInt(priceData.find('.price-id').last().val()) + priceData.length;
-		}
+		} else /*(priceData.add('.price-id').length == 0)*/ {
+			var id 		= priceData.length;
+		} 
 
 		var select 		= '<td><select disabled name="price['+id+'][type]" style="width: 8em"></select></td>';
 		var range 		= '<td><input type="time" name="price['+id+'][start]">s/d<input type="time" name="price['+id+'][end]"></td>';
@@ -17,7 +17,7 @@ $(document).ready(function() {
 
 		$('.custom-prices tbody').append('<tr>'+select+range+price+priority+action+'</tr>');
 
-		$.getJSON("/futsal/api/get_price_types", function(result){
+		$.getJSON(baseUrl+"/api/get_price_types", function(result){
 		    $.each(result, function(i, field){
 		        $(".custom-prices tbody select").append('<option value="'+field.id+'">'+field.name+'</option>');
 		    });
@@ -110,7 +110,7 @@ $(document).ready(function() {
 		var address = $('.address input[type="text"]');
 
 		if ($(this)[0].checked == true) {
-			$.getJSON("/futsal/api/get_user_address", function(result){
+			$.getJSON(baseUrl+"/api/get_user_address", function(result){
 				$('#street').val(result.street);
 				$('#district').val(result.district);
 				$('#city').val(result.city);
@@ -132,6 +132,14 @@ $(document).ready(function() {
 			address.removeAttr('disabled');
 
 		}
+	});
+
+	$('.check-all').on('click', function () {
+		$(this).parents('table').find('tbody :checkbox').prop('checked',this.checked);
+	});
+
+	$('tbody :checkbox').on('click', function () {
+		
 	});
 
 	function init() {

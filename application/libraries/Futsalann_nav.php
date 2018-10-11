@@ -79,100 +79,145 @@ class Futsalann_nav {
 		return $nav;
 	}
 
-	public function renter_nav()
+	public function renter_nav($active='dashboard')
 	{
 		$list = array(
 			array(
-				'url' 	=> '#',
-				'title'	=> 'Chat'
+				'link'	=> base_url('user/dashboard'),
+				'icon'	=> 'tachometer-alt',
+				'text'	=> 'Dashboard'
 			),
 			array(
-				'url' 	=> '#',
-				'title'	=> 'Ulasan'
+				'link'	=> '#',
+				'icon'	=> 'box',
+				'text'	=> 'Lapangan',
+				'child'	=> array(
+					array(
+						'link'	=> base_url('field/list'),
+						'text'	=> 'Semua lapangan'
+					),
+					array(
+						'link'	=> base_url('field/add'),
+						'text'	=> 'Tambah lapangan'	
+					),
+					array(
+						'link'	=> base_url('field/facility'),
+						'text'	=> 'Fasilitas'
+					),
+				)
 			),
-			// array(
-			// 	'url' 	=> '#',
-			// 	'title'	=> 'Pesan bantuan'
-			// ),
 			array(
-				'url' 	=> '#',
-				'title'	=> 'Komplain'
+				'link'	=> '#',
+				'icon'	=> 'book',
+				'text'	=> 'Booking',
+				'child'	=> array(
+					array(
+						'link'	=> '#',
+						'text'	=> 'Semua booking'
+					),
+					array(
+						'link'	=> '#',
+						'text'	=> 'Tambah booking'
+					),
+				)
 			),
 			array(
-				'url' 	=> '#',
-				'title'	=> 'Pengumuman'
+				'link'	=> '#',
+				'icon'	=> 'calendar-alt',
+				'text'	=> 'Kalendar',
+			),
+			array(
+				'link'	=> '#',
+				'icon'	=> 'comment-dots',
+				'text'	=> 'Chat',
+			),
+			array(
+				'link'	=> '#',
+				'icon'	=> 'pencil-alt',
+				'text'	=> 'Ulasan',
+			),
+			array(
+				'link'	=> '#',
+				'icon'	=> 'exclamation-triangle',
+				'text'	=> 'Komplain',
+			),
+			array(
+				'link'	=> '#',
+				'icon'	=> 'wrench',
+				'text'	=> 'Alat',
+				'child'	=> array(
+					array(
+						'link'	=> '#',
+						'text'	=> 'Statistik'
+					),
+					array(
+						'link'	=> '#',
+						'text'	=> 'Pengumuman'
+					),
+				)
+			),
+			array(
+				'link'	=> '#',
+				'icon'	=> 'cog',
+				'text'	=> 'Pengaturan',
 			),
 		);
 
-		$nav = bootstrap_listgroup_collapse($list, 'Kotak masuk');
+		$content = '<ul class="sidebar-menu" data-widget="tree"><li class="header">MAIN NAVIGATION</li>';
 
-		$list = array(
-			array(
-				'url' 	=> base_url('#'),
-				'title'	=> 'Semua booking'
-			),
-			array(
-				'url' 	=> base_url('#'),
-				'title'	=> 'Tambah booking'
-			),
-			array(
-				'url' 	=> base_url('#'),
-				'title'	=> 'Kalendar'
-			),
-			array(
-				'url' 	=> '#',
-				'title'	=> 'Riwayat transaksi'
-			),
-		);
+		foreach ($list as $a) 
+		{
+			$isactive = (strtolower($a['text']) == strtolower($active)) ? 'active' : '' ;
+			if ( ! isset($a['child'])) 
+			{
+				$content .= '<li class="'.$isactive.'"><a href="'.$a['link'].'"><i class="fa fa-'.$a['icon'].'"></i> <span>'.$a['text'].'</span></a></li>';
+			}
+			else
+			{	
+				$child 	= '';
+				$parent	= (strtolower($a['text']) == strtolower($active)) ? 'active' : '' ;
+				foreach ($a['child'] as $b) 
+				{
+					$isactive = (strtolower($b['text']) == strtolower($active)) ? 'active' : '' ;
+					$parent .= $isactive;
+					$child .= '<li class="'.$isactive.'"><a href="'.$b['link'].'"><i class="far fa-circle"></i> <span>'.$b['text'].'</span></a></li>';
+				}
 
-		$nav .= bootstrap_listgroup_collapse($list, 'Booking');
+				$content .= '<li class="treeview '.$parent.'"><a href="'.$a['link'].'"><i class="fa fa-'.$a['icon'].'"></i> <span>'.$a['text'].'</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>';
+				$content .= '<ul class="treeview-menu">';
+				$content .= $child;
+				$content .= '</ul></li>';
+			}
 
-		$list = array(
-			array(
-				'url' 	=> base_url('/field/list'),
-				'title'	=> 'Semua lapangan'
-			),
-			array(
-				'url' 	=> base_url('/field/add'),
-				'title'	=> 'Tambah lapangan'
-			),
-			// array(
-			// 	'url' 	=> '#',
-			// 	'title'	=> 'Pesan bantuan'
-			// ),
-			// array(
-			// 	'url' 	=> base_url('/field/gallery'),
-			// 	'title'	=> 'Galeri'
-			// ),
-			// array(
-			// 	'url' 	=> base_url('/field/resource'),
-			// 	'title'	=> 'Resource'
-			// ),
-			array(
-				'url' 	=> base_url('/field/facility'),
-				'title'	=> 'Fasilitas'
-			),
-		);
+		}
+		$content .= '</ul>';
 
-		$nav .= bootstrap_listgroup_collapse($list, 'Lapangan');
+		return $content;
+	}
 
-		$list = array(
-			array(
-				'url' 	=> '#',
-				'title'	=> 'Pelanggan favorit'
-			),
-			array(
-				'url' 	=> '#',
-				'title'	=> 'Statistik'
-			),
-			array(
-				'url' 	=> '#',
-				'title'	=> 'Pengaturan'
-			),
-		);
+	public function dash_breadcrumb($data='')
+	{
+		$breadcrumb = '<ol class="breadcrumb">';
+		$breadcrumb .= '<li><a href="'.base_url().'"><i class="fa fa-home"></i> Home</a></li>';
+		if (is_array($data)) 
+		{
+			for ($i=0; $i < count($data); $i++) 
+			{ 
+				if ($i+1 == count($data)) {
+					$breadcrumb .= '<li class="active">'.$data[$i].'</li>';
+				}
+				else
+				{
+					$breadcrumb .= '<li>'.anchor($data[$i]['link'],$data[$i]).'</li>';
+				}
+			}
+		}
+		else
+		{
+			$breadcrumb .= '<li class="active">'.$data.'</li>';
+		}
+		$breadcrumb .= '</ol>';
 
-		$nav .= bootstrap_listgroup_collapse($list, 'Alat');
-
-		return $nav;
+		return $breadcrumb;
 	}
 }

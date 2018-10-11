@@ -12,7 +12,7 @@ class Gallery extends MY_Controller
 
 		if ($this->futsalann->who_is_login() != 'renter') 
 		{
-			$this->load->view('single', $this->data);
+			$this->load->view('page/single', $this->data);
 			exit();
 			// intinya nanti redirrect gitu aja ya... ^_^
 		}

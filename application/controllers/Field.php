@@ -13,6 +13,9 @@ class Field extends MY_Controller
 		$this->load->model(['mfield','mfacility']);
 
 		$this->data['breadcrumb'][] = 'Lapangan';
+
+		$this->data['user'] = $this->muser->get($this->session->user_id);
+
 	}
 
 	public function index()
@@ -28,9 +31,15 @@ class Field extends MY_Controller
 	public function list($page='')
 	{
 		// Photo, nama, price, fasilitas, resource
-		$this->data['main'] = $this->futsalann_table->field_table($this->session->user_id, 10, $page);
-		$this->load->view('single-reverse',$this->data);
-		# code...
+		$this->data['table'] = $this->futsalann_table->field_table($this->session->user_id);
+		$this->data['title']	= 'Semua lapangan';
+		$this->data['sidebar'] 	= $this->futsalann_nav->renter_nav('Semua lapangan');
+		$this->data['breadcrumb'] = $this->futsalann_nav->dash_breadcrumb('Lapangan');
+		$this->data['content']	= $this->load->view('dashboard/field/list', $this->data, TRUE);
+
+		$this->load->view('dashboard/inc/header',$this->data);
+		$this->load->view('dashboard/inc/nav',$this->data);
+		$this->load->view('dashboard/content',$this->data);
 	}
 
 	public function add()
@@ -45,12 +54,18 @@ class Field extends MY_Controller
 			if ( ! empty($_POST)) 
 			{
 				$field_id = $this->mfield->insert($_POST);
-				redirect(base_url('/field/edit/'.$field_id));
+				// redirect(base_url('/field/edit/'.$field_id));
+				// echo "<pre>".print_r($_POST, TRUE)."</pre>";
 			}
 
-			$this->data['main'] = $this->futsalann_form->field_form();
+			$this->data['title']	= 'Tambah lapangan';
+			$this->data['sidebar'] 	= $this->futsalann_nav->renter_nav('Tambah lapangan');
+			$this->data['breadcrumb'] = $this->futsalann_nav->dash_breadcrumb('Lapangan');
+			$this->data['content']	= $this->futsalann_form->field_form();
 
-			$this->load->view('single-reverse',$this->data);
+			$this->load->view('dashboard/inc/header',$this->data);
+			$this->load->view('dashboard/inc/nav',$this->data);
+			$this->load->view('dashboard/content',$this->data);
 		}
 	}
 
@@ -74,9 +89,14 @@ class Field extends MY_Controller
 				$this->mfield->set($id, $_POST);
 			}
 			
-			$this->data['main'] = $this->futsalann_form->field_form($id);
+			$this->data['title']	= 'Edit lapangan';
+			$this->data['sidebar'] 	= $this->futsalann_nav->renter_nav('Lapangan');
+			$this->data['breadcrumb'] = $this->futsalann_nav->dash_breadcrumb('Lapangan');
+			$this->data['content']	= $this->futsalann_form->field_form($id);
 
-			$this->load->view('single-reverse',$this->data);
+			$this->load->view('dashboard/inc/header',$this->data);
+			$this->load->view('dashboard/inc/nav',$this->data);
+			$this->load->view('dashboard/content',$this->data);
 		}
 	}
 
@@ -89,33 +109,30 @@ class Field extends MY_Controller
 		}
 		else
 		{
-			$this->mfield->delete($id);
+			if (isset($_POST['id'])) 
+			{
+				foreach ($_POST['id'] as $id) 
+				{
+					$this->mfield->delete($id);
+				}
+			}
+			else
+			{
+				$this->mfield->delete($id);
+			}
 
 			redirect(base_url('/field/list'));
 
-			$this->data['main'] = $this->futsalann_form->field_form();
+			// $this->data['main'] = $this->futsalann_form->field_form();
 
-			$this->load->view('single-reverse',$this->data);
-		}
-	}
-
-	public function price($option='',$id='')
-	{
-		switch ($option) {
-			case 'delete':
-				echo $this->mprice->delete($id);
-				break;
-			
-			default:
-				# code...
-				break;
+			// $this->load->view('page/single-reverse',$this->data);
 		}
 	}
 
 	public function resource()
 	{
 		# code...
-		$this->load->view('single-reverse',$this->data);
+		$this->load->view('page/single-reverse',$this->data);
 	}
 
 	public function facility($option='',$id='')
@@ -130,7 +147,15 @@ class Field extends MY_Controller
 			
 			if ($option == 'delete') 
 			{
-				$this->mfacility->delete($id);
+				if (isset($_POST['id'])) 
+				{
+					foreach ($_POST['id'] as $id) 
+					{
+						$this->mfacility->delete($id);
+					}
+				} else {
+					$this->mfacility->delete($id);
+				}
 				redirect('/field/facility');
 			}
 			elseif ($option == 'edit')
@@ -142,25 +167,32 @@ class Field extends MY_Controller
 				}
 				else
 				{
-					$this->data['main'] = $this->futsalann_form->facility_form($id,base_url('/field/facility/edit/'.$id));
+					$this->data['form']	= $this->futsalann_form->facility_form($id,base_url('/field/facility/edit/'.$id));
 				}
 			}
 			else
 			{
 				if ($this->form_validation->run() == TRUE) 
 				{
-					$this->mfacility->insert($_POST);
+					$this->mfacility->insert('', $_POST);
 					redirect('/field/facility');
 				}
 				else
 				{
-					$this->data['main'] = $this->futsalann_form->facility_form($id, base_url('/field/facility'));
+					$this->data['form']	= $this->futsalann_form->facility_form($id, base_url('/field/facility'));
 				}
 			}
 				
-			$this->data['secondary'] = $this->futsalann_table->facility_table($this->session->user_id);
+			$this->data['table'] = $this->futsalann_table->facility_table($this->session->user_id);
 
-			$this->load->view('double-reverse',$this->data);
+			$this->data['content'] 	= $this->load->view('dashboard/field/facility', $this->data, TRUE);
+			$this->data['title'] 	= 'Fasilitas';
+			$this->data['sidebar'] 	= $this->futsalann_nav->renter_nav('Fasilitas');
+			$this->data['breadcrumb'] = $this->futsalann_nav->dash_breadcrumb('Fasilitas');
+
+			$this->load->view('dashboard/inc/header',$this->data);
+			$this->load->view('dashboard/inc/nav',$this->data);
+			$this->load->view('dashboard/content',$this->data);
 		}
 	}
 

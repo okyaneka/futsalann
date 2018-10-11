@@ -206,6 +206,7 @@ class Futsalann_form {
 		$form .= $this->CI->load->view('inc/field/gallery_form', $data, TRUE);
 		$form .= $this->CI->load->view('inc/field/option_form', $data, TRUE);
 		$form .= $this->CI->load->view('inc/field/action_bar', $data, TRUE);
+		$form .= $this->CI->load->view('inc/field/modal_form', $data, TRUE);
 		$form .= '</form>';
 		
 		return $form;
@@ -243,7 +244,7 @@ class Futsalann_form {
 			),
 			array(
 				'type'	=> 'textarea',
-				'id'	=> 'description',
+				'id'	=> 'fac-description',
 				'name'	=> 'description',
 				'label'	=> 'Deskripsi (opsional)',
 				'value' => $data['description'],

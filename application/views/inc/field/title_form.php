@@ -6,14 +6,7 @@
 
 <div class="form-group">
 	<label for="description">Deskripsi produk</label>
-	<textarea id="description" name="description">
+	<textarea id="field-description" name="description">
 		<?php echo isset($description) ? $description : '' ; ?>
 	</textarea>
-
-
 </div>
-<script type="text/javascript">	
-	$(function () {
-		CKEDITOR.replace( "description" );
-	})
-</script>

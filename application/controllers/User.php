@@ -73,7 +73,7 @@ class User extends MY_Controller
 			}
 		}
 
-		$this->load->view('mini-reverse', $this->data);
+		$this->load->view('page/mini-reverse', $this->data);
 	}
 
 	public function logout()
@@ -136,7 +136,7 @@ class User extends MY_Controller
 			$this->data['main'] = anchor($link, 'Klik disini').' untuk melanjutkan ke proses berikutnya';
 		}
 
-		$this->load->view('mini-reverse', $this->data);
+		$this->load->view('page/mini-reverse', $this->data);
 	}
 
 	public function complete($option='')
@@ -204,6 +204,8 @@ class User extends MY_Controller
 						break;
 
 					case 'second':
+						$extra = array();
+
 						if (isset($_POST['submit']))
 						{
 							$this->upload->initialize($this->conf['upload_profile']);
@@ -270,13 +272,33 @@ class User extends MY_Controller
 
 				$this->data['main'] = $this->futsalann_profile->profile($id);
 				$this->data['sidebar'] = $this->futsalann_nav->$nav();
-				$this->load->view('single-reverse',$this->data);
+				$this->load->view('page/single',$this->data);
 			}
 			else
 			{
 				$this->data['main'] = $this->futsalann_profile->profile($id);
-				$this->load->view('single',$this->data);	
+				$this->load->view('page/single',$this->data);	
 			}
+		}	
+
+	}
+
+	public function dashboard()
+	{
+		if ( ! isset($this->session->user_id))
+		{
+			redirect(base_url('/user/login/'));
+			// membuat halaman khusus untuk menampilkan informasi error
+		}
+		else
+		{
+			$this->data['user'] 	= $this->muser->get($this->session->user_id);
+			$this->data['title']	= 'Dashboard';
+			$this->data['breadcrumb'] = $this->futsalann_nav->dash_breadcrumb('Dashboard');
+
+			$this->load->view('dashboard/inc/header',$this->data);
+			$this->load->view('dashboard/inc/nav',$this->data);
+			$this->load->view('dashboard/dashboard',$this->data);
 		}	
 
 	}
@@ -361,7 +383,7 @@ class User extends MY_Controller
 		
 		$this->data['secondary'] = $this->futsalann_form->profile_form($this->session->user_id, base_url('/user/setting/profile/2'), $extra);
 		
-		$this->load->view('double-reverse',$this->data);
+		$this->load->view('page/double-reverse',$this->data);
 	}
 
 }

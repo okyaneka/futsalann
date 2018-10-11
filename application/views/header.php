@@ -5,33 +5,35 @@
 </head>
 <body>
 	<div id="header" class="container-fluid">
-		<nav class="navbar navbar-default row">
+		<nav class="navbar-default row">
 			<div class="container">
-				<div class="navbar-header">
+				<div class="navbar-header p-r-15">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#my_menu">
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<?= anchor(base_url(),'Futsaloka','class="navbar-brand"');?>
+					<?php echo anchor(base_url(),'Futsalann','class="navbar-brand col-main"');?>
 				</div>
 				<!-- main menu -->
 				<div class="collapse navbar-collapse" id="my_menu">
-					<ul class="nav navbar-nav main-menu">
-						<li><?= anchor(base_url(), 'Home');?></li>
-						<li class="dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" href="#">Dropdown<span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Item 1</a></li>
-								<li><a href="#">Item 2</a></li>
-								<li><a href="#">Item 3</a></li>
-							</ul>
-						</li>
-					</ul>
-					<ul class="nav navbar-nav navbar-right">
+					<ul class="nav navbar-nav navbar-right p-l-15">
+					<?php if ( ! isset($this->session->user_id)) : ?>
 						<li><a href="<?php echo base_url('user/register');?>">Daftar</a></li>
 						<li><a href="<?php echo base_url('user/login');?>">Masuk</a></li>
+					<?php else : ?>
 						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-user"></span><span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="<?php echo base_url('user/profile');?>">Profil</a></li>
+								<li><a href="<?php echo base_url('user/logout');?>">Logout</a></li>
+							</ul>
+						</li>
+						<?php if ($this->futsalann->who_is_login() == 'renter') : ?>
+							<li><a href="<?php echo base_url('user/dashboard');?>">Dashboard</a></li>
+						<?php endif;?>
+					<?php endif;?>
+						<!-- <li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-user"></span><span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a href="<?php echo base_url('/user/profile/'.$this->session->user_id) ?>">Login status : <?php echo isset($_SESSION['user_id']) ? 'OK (user_id = '.$_SESSION['user_id'].')' : 'No user login' ;?></a></li>
@@ -45,14 +47,12 @@
 							<ul class="dropdown-menu">
 								<li></li>
 							</ul>
-						</li>
+						</li> -->
 					</ul>
+					<?php echo isset($search) ? $search : '';?>
 				</div> <!-- #my_menu -->
 			</div>
 		</nav>
 		
 		<!-- navbar (menu, user, cart) -->
-	</div>
-	<div class="container">
-		<?php echo bootstrap_breadcrumb($breadcrumb); ?>
 	</div>
