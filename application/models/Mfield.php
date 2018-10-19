@@ -6,7 +6,7 @@ defined('BASEPATH') or exit('No dirrect script access allowed');
  */
 class Mfield extends CI_Model
 {
-	private $option = array('open','close','min_order','max_order');
+	private $option = array('open','close','floor','min_order','max_order');
 
 	function __construct()
 	{
@@ -59,11 +59,11 @@ class Mfield extends CI_Model
 			$this->mfacility->insert($field_id, $data['facility']);
 		}
 
-		$this->mresource->insert_resource_name($field_id,$data['resname']);
-		if (isset($data['facility'])) 
-		{
-			$this->mresource->insert($field_id, $data['res']);
-		}
+		// $this->mresource->insert_resource_name($field_id,$data['resname']);
+		// if (isset($data['res'])) 
+		// {
+		// 	$this->mresource->insert($field_id, $data['res']);
+		// }
 
 		$this->maddress->insert_field($field_id, $data['address']);
 
@@ -142,13 +142,13 @@ class Mfield extends CI_Model
 			}
 		}
 
-		$this->mresource->set_resource_name($id,$data['resname']);
-		$this->mresource->delete_all($id);
-		if (isset($data['res'])) {
-			foreach ($data['res'] as $res) {
-				$this->mresource->insert($id, $res);
-			}
-		}
+		// $this->mresource->set_resource_name($id,$data['resname']);
+		// $this->mresource->delete_all($id);
+		// if (isset($data['res'])) {
+		// 	foreach ($data['res'] as $res) {
+		// 		$this->mresource->insert($id, $res);
+		// 	}
+		// }
 
 		$this->mfacility->delete_all($id);
 		if (isset($data['facility'])) {
@@ -206,6 +206,7 @@ class Mfield extends CI_Model
 		return array(
 			'open' => isset($meta['open']) ? $meta['open'] : '',
 			'close' => isset($meta['close']) ? $meta['close'] : '',
+			'floor' => isset($meta['floor']) ? $meta['floor'] : '',
 			'min_order' => isset($meta['min_order']) ? $meta['min_order'] : '',
 			'max_order' => isset($meta['max_order']) ? $meta['max_order'] : '',
 		);
@@ -219,9 +220,9 @@ class Mfield extends CI_Model
 		$data['baseprice'] = $this->mprice->get_base_price($id);
 		$data['price'] = $this->mprice->get_all($id);
 		$data['facility'] = $this->mfacility->get_all($id);
-		$data['resname'] = $this->mresource->get_resource_name($id);
-		$data['resource'] = $this->mresource->get_all($id);
-		// $data['user'] = $this->muser->get_field($id);
+		// $data['resname'] = $this->mresource->get_resource_name($id);
+		// $data['resource'] = $this->mresource->get_all($id);
+		$data['user'] = $this->muser->get($data['user_id']);
 		$data['address'] = $this->maddress->get_field($id);
 		$data['coordinate'] = $this->mcoordinate->get($id);
 
@@ -240,7 +241,7 @@ class Mfield extends CI_Model
 	{
 		$this->db->where('main','1');
 		$this->db->where('field_id',$field_id);
-		return $this->db->get('field_gallery')->row_array();
+		return $this->db->get('field_gallery')->row_array()['file'];
 	}
 
 	public function get_all($limit='', $offset='')
@@ -248,12 +249,14 @@ class Mfield extends CI_Model
 		$data = $this->db->get('field',$limit,$offset)->result_array();
 		for ($i=0; $i < count($data); $i++) { 
 			$data[$i]['option'] = $this->get_option($data[$i]['id']);
-			$data[$i]['price'] = $this->mprice->get_all($data[$i]['id']);
-			$data[$i]['facility'] = $this->mfacility->get_all($data[$i]['id']);
-			$data[$i]['resource'] = $this->mresource->get_all($data[$i]['id']);
-			$data[$i]['user'] = $this->muser->get_field($data[$i]['id']);
+			$data[$i]['baseprice'] = $this->mprice->get_base_price($data[$i]['id']);
+			// $data[$i]['price'] = $this->mprice->get_all($data[$i]['id']);
+			// $data[$i]['facility'] = $this->mfacility->get_all($data[$i]['id']);
+			// $data[$i]['resource'] = $this->mresource->get_all($data[$i]['id']);
+			$data[$i]['image'] = $this->get_main_image($data[$i]['id']);
+			$data[$i]['user'] = $this->muser->get($data[$i]['user_id']);
 			$data[$i]['address'] = $this->maddress->get_field($data[$i]['id']);
-			$data[$i]['coordinate'] = $this->mcoordinate->get($data[$i]['id']);
+			// $data[$i]['coordinate'] = $this->mcoordinate->get($data[$i]['id']);
 		}
 
 		return $data;

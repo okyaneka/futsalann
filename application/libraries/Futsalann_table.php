@@ -64,7 +64,7 @@ class Futsalann_table {
 			'<input class="check-all" type="checkbox">',
 			'<i class="fa fa-image"></i>',
 			'Nama lapangan',
-			'Resource',
+			'Tipe lantai',
 			'Fasilitas'
 		);
 
@@ -77,7 +77,7 @@ class Futsalann_table {
 		// }
 
 		foreach ($data as $row) {
-			$view_link	= anchor(base_url('/field/view/'.$row['id']),'Lihat');
+			$view_link	= anchor(base_url('/field/view/'.$row['id']),'Lihat','target="_blank"');
 			$edit_link	= anchor(base_url('/field/edit/'.$row['id']),'Edit');
 			$delete_link= anchor(base_url('/field/delete/'.$row['id']),'Hapus','class="text-danger"');
 			$sku		= 'sku : '.$row['sku'];
@@ -85,18 +85,20 @@ class Futsalann_table {
 
 			$checkbox 	= '<input type="checkbox" name="id[]" value="'.$row['id'].'">';
 			
-			$image_name	= $this->CI->mfield->get_main_image($row['id'])['file'];
+			$image_name	= $this->CI->mfield->get_main_image($row['id']);
 			$image 		= '<img style="height:4em" class="img-thumbnail" src="'.base_url('/assets/images/uploads/'.$image_name).'">';
 			
 			$nama 		= anchor(base_url('/field/edit/'.$row['id']),$row['name']).$action_link;
 
-			$resource 	= '<strong>'.$this->CI->mresource->get_resource_name($row['id']).':</strong></br>';
-			$temp		= array();
-			foreach ($this->CI->mresource->get_all($row['id']) as $res) 
-			{
-				$temp[] = $res['name'];
-			}
-			$resource 	.= implode(', ', $temp);
+			// $resource 	= '<strong>'.$this->CI->mresource->get_resource_name($row['id']).':</strong></br>';
+			// $temp		= array();
+			// foreach ($this->CI->mresource->get_all($row['id']) as $res) 
+			// {
+			// 	$temp[] = $res['name'];
+			// }
+			// $resource 	.= implode(', ', $temp);
+			
+			$floor		= $this->CI->mfield->get_meta($row['id'])['floor'];
 
 			$temp 		= array();
 			foreach ($this->CI->mfacility->get_all($row['id']) as $fac) {
@@ -106,7 +108,7 @@ class Futsalann_table {
 
 			// $deskripsi 	= substr($row['description'], 0, 40).'...';
 
-			$table->add_row($checkbox, $image, $nama, $resource, $facility);
+			$table->add_row($checkbox, $image, $nama, $floor, $facility);
 		}
 
 		$table = $this->CI->table->generate();

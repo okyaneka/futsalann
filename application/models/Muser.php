@@ -89,25 +89,26 @@ class Muser extends CI_Model
 
 	public function get($id='')
 	{
-		$data = $this->db->get_where('user','id='.$id)->row_array();
-		$data['meta'] = $this->get_meta($id);
+		// $this->db->select('')
+		// $data = $this->db->get_where('user','id='.$id)->row_array();
+		$data = $this->get_meta($id);
 		return $data;
 	}
 
 	public function get_fullname($id='')
 	{
 		$data = $this->get($id);
-		return $data['meta']['firstname'].' '.$data['meta']['lastname'];
+		return $data['firstname'].' '.$data['lastname'];
 	}
 
 	public function get_role($id='')
 	{
-		return $this->get($id)['role'];
+		return $this->db->get_where('user','id='.$id)->row_array()['role'];
 	}
 
 	public function get_email($id='')
 	{
-		return $this->get($id)['email'];
+		return $this->db->get_where('user','id='.$id)->row_array()['email'];
 	}
 
 	public function get_meta($user_id='')

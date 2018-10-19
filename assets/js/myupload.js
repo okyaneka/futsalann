@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(window).bind("load", function() {
 
 	$(".field-gallery").on('dragenter', function (e) {
 		e.preventDefault();

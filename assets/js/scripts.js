@@ -1,15 +1,54 @@
-$(document).ready(function() {
+$(window).on('load',function() {
 	// affix
-	$('#header').affix({offset:{top:$('.banner-content button').offset().top}});
+	try {
+		$('#header').affix({offset:{top:$('.banner-content button').offset().top}});
+	} catch (e) {
+	// $('#header').affix({offset:{top:$('.banner-top h1').offset().top}});
+	}
+
 	$("#header").on('affix.bs.affix', function(){
 		$(this).addClass('animated slideInDown');
 		$(this).find('.search').removeClass('hidden');
-    });
-    $('#header').on('affix-top.bs.affix', function(){
-    	$(this).removeClass('animated slideInDown');
+	});
+	$('#header').on('affix-top.bs.affix', function(){
+		$(this).removeClass('animated slideInDown');
 		$(this).find('.search').addClass('hidden');
-    });
+	});
 
+	$('.field-images').each(function (argument) {
+		if ($(this).height() > $(this).find('img').height()) {
+			$(this).find('img').css('height','100%');
+			$(this).find('img').css('width','auto');
+		}
+	});
+
+	$('#slider').flexslider({
+		animation: "slide",
+		controlNav: "thumbnails",
+		// animationLoop: false,
+		// slideshow: false,
+		// sync: "#carousel"
+	});
+
+	$('.map').gmap3({
+		center:[-7.760972, 110.389361],
+		zoom:15,
+		zoomControl: true,
+		zoomControlOptions: {
+			style: google.maps.ZoomControlStyle.LARGE
+		},
+  		mapTypeControl: false,
+  		scaleControl: true,
+  		streetViewControl: false,
+  		rotateControl: false,
+  		fullscreenControl: false,
+	}).marker([
+		{position:[-7.760972, 110.389361]},
+		{address:"86000 Poitiers, France"},
+		{address:"66000 Perpignan, France", icon: "http://maps.google.com/mapfiles/marker_grey.png"}
+	]).on('click', function (marker) {
+		marker.setIcon('http://maps.google.com/mapfiles/marker_green.png');
+	});
 
 	// $('#sandbox-container .input-group.date').datepicker({
 	// 	maxViewMode: 2,
@@ -50,29 +89,29 @@ $(document).ready(function() {
 	// 			}
 	// 		},
 	// 	},
-			
- //      // today: function (month) {
- //      //     console.log('today');
- //      // },
- //      // nextYear: function (month) {
- //      //     console.log('next year');
- //      // },
- //      // nextMonth: function (month) {
- //      //     console.log('next month');
- //      // },
- //      // previousYear: function (month) {
- //      //     console.log('previous year');
- //      // },
- //      // onYearChange: function (month) {
- //      //     console.log('on year change');
- //      // },
- //      // previousMonth: function (month) {
- //      //     console.log('previous month');
- //      // },
- //      // onMonthChange: function (month) {
- //      //     console.log('on month change');
- //      // }
- //    	daysOfTheWeek: ['M','S','S','R','K','J','S'],
+
+	//      // today: function (month) {
+	//      //     console.log('today');
+	//      // },
+	//      // nextYear: function (month) {
+	//      //     console.log('next year');
+	//      // },
+	//      // nextMonth: function (month) {
+	//      //     console.log('next month');
+	//      // },
+	//      // previousYear: function (month) {
+	//      //     console.log('previous year');
+	//      // },
+	//      // onYearChange: function (month) {
+	//      //     console.log('on year change');
+	//      // },
+	//      // previousMonth: function (month) {
+	//      //     console.log('previous month');
+	//      // },
+	//      // onMonthChange: function (month) {
+	//      //     console.log('on month change');
+	//      // }
+	//    	daysOfTheWeek: ['M','S','S','R','K','J','S'],
 	// });
 
 	// $("#duration").change(function(e) {

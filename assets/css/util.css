@@ -3,7 +3,9 @@
  */
 
 .col-main {	color: #39a2fd !important; }
+.col-white { color: #FFF !important; }
 .bg-main { background: #39a2fd !important; }
+.baseprice { color: #FF7F2A; font-weight: 600; }
 
 /*
  * Utility

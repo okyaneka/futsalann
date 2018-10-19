@@ -7,7 +7,7 @@
 	<div id="header" class="container-fluid">
 		<nav class="navbar-default row">
 			<div class="container">
-				<div class="navbar-header p-r-15">
+				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#my_menu">
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>

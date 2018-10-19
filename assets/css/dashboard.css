@@ -32,16 +32,11 @@
 	display: inline-block;
 }
 
-
-.table {
-	overflow: hidden;
-}
-
 .table tr:hover .action-link {
 	left: 0
 }
 
 .action-link {
 	position: relative;
-	left: 9999px;
+	left: -9999px;
 }

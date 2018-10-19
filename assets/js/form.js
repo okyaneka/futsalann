@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(window).bind("load", function() {
 
 	$('.custom-prices .add-row').click(function() {
 

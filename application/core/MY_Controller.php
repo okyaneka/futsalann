@@ -76,7 +76,7 @@ class MY_Controller extends CI_Controller {
 		$this->load->library(array('futsalann','futsalann_nav','futsalann_profile','futsalann_form','futsalann_table','form_validation'));
 
 		$this->data['title']		= '';
-		$this->data['main'] 		= '';
+		$this->data['content'] 		= '';
 		$this->data['secondary']	= '';
 
 		if (isset($this->session->user_id)) 

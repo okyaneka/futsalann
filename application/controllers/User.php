@@ -72,8 +72,9 @@ class User extends MY_Controller
 				redirect(base_url('/user/profile/'.$this->session->user_id));
 			}
 		}
-
+		$this->load->view('inc/header',$this->data);
 		$this->load->view('page/mini-reverse', $this->data);
+		$this->load->view('inc/footer',$this->data);
 	}
 
 	public function logout()
@@ -136,7 +137,9 @@ class User extends MY_Controller
 			$this->data['main'] = anchor($link, 'Klik disini').' untuk melanjutkan ke proses berikutnya';
 		}
 
+		$this->load->view('inc/header',$this->data);
 		$this->load->view('page/mini-reverse', $this->data);
+		$this->load->view('inc/footer',$this->data);
 	}
 
 	public function complete($option='')
@@ -248,7 +251,9 @@ class User extends MY_Controller
 			}
 		}
 
+		$this->load->view('inc/header',$this->data);
 		$this->load->view($page, $this->data);
+		$this->load->view('inc/footer',$this->data);
 	}
 
 	public function profile($id='')
@@ -265,19 +270,27 @@ class User extends MY_Controller
 		}
 		else
 		{
-			$this->data['breadcrumb'][] = $this->muser->get_fullname($id);
+			$this->data['title'] = $this->muser->get_fullname($id);
+			$this->data['breadcrumb'] = $this->load->view('inc/breadcrumb',$this->data,TRUE);
+			// $this->data['breadcrumb'][] = $this->muser->get_fullname($id);
 			if ($this->session->user_id == $id) 
 			{
 				$nav = $this->futsalann->who_is_login().'_nav';
 
 				$this->data['main'] = $this->futsalann_profile->profile($id);
 				$this->data['sidebar'] = $this->futsalann_nav->$nav();
+				
+				$this->load->view('inc/header',$this->data);
 				$this->load->view('page/single',$this->data);
+				$this->load->view('inc/footer',$this->data);
 			}
 			else
 			{
 				$this->data['main'] = $this->futsalann_profile->profile($id);
+
+				$this->load->view('inc/header',$this->data);
 				$this->load->view('page/single',$this->data);	
+				$this->load->view('inc/footer',$this->data);
 			}
 		}	
 

@@ -1,5 +1,4 @@
-<?php $this->load->view('inc/header');?>
-<?php echo $main; ?>
+<?php echo $content; ?>
 <div class="text-center">
 	<h1 class="col-main" style="padding: 200px 0">
 		col-main
@@ -10,4 +9,3 @@
 		bg-main
 	</h1>
 </div>
-<?php $this->load->view('inc/footer');

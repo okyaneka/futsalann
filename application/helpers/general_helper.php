@@ -16,13 +16,27 @@ if ( ! function_exists('my_head'))
 		echo '<link rel="stylesheet" type="text/css" href="'.base_url('/assets/vendors/line-awesome/css/line-awesome.min.css').'">';
 		echo '<link rel="stylesheet" type="text/css" href="'.base_url('/assets/vendors/font-awesome/css/fontawesome-all.min.css').'">';
 		echo '<link rel="stylesheet" type="text/css" href="'.base_url('/assets/vendors/animate/animate.css').'">';
+		echo '<link rel="stylesheet" type="text/css" href="'.base_url('/assets/vendors/bootstrap-datepicker/css/bootstrap-datepicker.min.css').'">';
+		echo '<link rel="stylesheet" type="text/css" href="'.base_url('/assets/vendors/flexslider/flexslider.css').'">';
+		// echo '<link rel="stylesheet" type="text/css" href="'.base_url('/assets/vendors/flexslider/flexslider-rtl-min.css').'">';
 		echo '<link rel="stylesheet" type="text/css" href="'.base_url('/assets/fonts/opensans.css').'">';
 		echo '<link rel="stylesheet" type="text/css" href="'.base_url('/assets/css/util.css').'">';
 		echo '<link rel="stylesheet" type="text/css" href="'.base_url('/assets/css/style.css').'">';
+	}
+}
+
+if ( ! function_exists('my_foot')) 
+{
+	function my_foot()
+	{
+		// script
 		echo '<script type="text/javascript" src="'.base_url('/assets/vendors/jquery/jquery-3.3.1.min.js').'"></script>';
 		echo '<script type="text/javascript" src="'.base_url('/assets/vendors/bootstrap/js/bootstrap.min.js').'"></script>';
 		echo '<script type="text/javascript" src="'.base_url('/assets/vendors/ckeditor/ckeditor.js').'"></script>';
 		echo '<script type="text/javascript" src="'.base_url('/assets/vendors/ckeditor/config.js').'"></script>';
+		echo '<script type="text/javascript" src="'.base_url('/assets/vendors/bootstrap-datepicker/js/bootstrap-datepicker.min.js').'"></script>';
+		echo '<script type="text/javascript" src="'.base_url('/assets/vendors/flexslider/jquery.flexslider-min.js').'"></script>';
+		echo '<script type="text/javascript" src="'.base_url('/assets/vendors/gmap3/gmap3.min.js').'"></script>';
 		echo '<script type="text/javascript" src="'.base_url('/assets/js/form.js').'"></script>';
 		echo '<script type="text/javascript" src="'.base_url('/assets/js/myupload.js').'"></script>';
 		echo '<script type="text/javascript" src="'.base_url('/assets/js/scripts.js').'"></script>';
@@ -127,10 +141,10 @@ if ( ! function_exists('price_type'))
 	}
 }
 
-if ( ! function_exists('my_foot')) 
+if ( ! function_exists('price_format')) 
 {
-	function my_foot()
+	function price_format($n='')
 	{
-		
+		return ($n === '') ? '' : number_format( (float) $n, 2, '.', ',');
 	}
 }

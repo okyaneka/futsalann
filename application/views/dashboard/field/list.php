@@ -12,7 +12,9 @@
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
-					<?php echo $table;?>
+					<div class="table-responsive">
+						<?php echo $table;?>
+					</div>
 				</div>
 				<!-- /.box-body -->
 			</div>

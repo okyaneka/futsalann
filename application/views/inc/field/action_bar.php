@@ -5,7 +5,9 @@
 	</div>
 	<!-- right -->
 	<div class="pull-right">
-			<a href="#" class="btn btn-default">Tampilan</a>
+		<?php if (isset($id)) : ?>
+		<a href="<?php echo base_url('field/view/'.$id);?>" target="_blank" class="btn btn-default">Tampilan</a>
+		<?php endif; ?>
 		<div class="btn-group">
 			<button type="submit" class="btn btn-primary"><?php echo isset($id) ? 'Perbarui' : 'Terbitkan' ; ?></button>
 			<a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">

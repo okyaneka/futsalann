@@ -23,9 +23,40 @@ class Field extends MY_Controller
 		$this->page(1);
 	}
 
-	public function page()
+	public function view($id='')
 	{
-		# code...
+		$field = $this->mfield->get($id);
+		$this->data['sidebar'] = $this->load->view('inc/sidebar',$this->data,TRUE);
+		$this->data['title'] = $field['name'];
+		$this->data['segment'] = array(
+			array(
+				'title' => 'Lapangan',
+				'url'	=> base_url('field/page')
+			)
+		);
+		$this->data['breadcrumb'] = $this->load->view('inc/breadcrumb',$this->data,TRUE);
+
+		$this->data['content'] = $this->load->view('inc/field',$field,TRUE);
+
+		$this->load->view('inc/header',$this->data);
+		$this->load->view('page/fullwidth',$this->data);
+		$this->load->view('inc/footer',$this->data);
+		 echo '<pre>'.print_r($field,TRUE).'</pre>'; 
+	}
+
+	public function page($page='')
+	{
+		$keyword = isset($_GET['keyword']) ? ' "'.$_GET['keyword'].'"' : '';
+		$this->data['sidebar'] = $this->load->view('inc/sidebar',$this->data,TRUE);
+		$this->data['title'] = 'Lapangan'.$keyword;
+		$this->data['breadcrumb'] = $this->load->view('inc/breadcrumb',$this->data,TRUE);
+		$this->data['fields'] = $this->mfield->get_all();
+
+		$this->data['content'] = $this->load->view('inc/field-list',$this->data,TRUE);
+
+		$this->load->view('inc/header',$this->data);
+		$this->load->view('page/single-reverse',$this->data);
+		$this->load->view('inc/footer',$this->data);
 	}
 
 	public function list($page='')

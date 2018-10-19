@@ -3,12 +3,12 @@
 		<ul class="nav nav-pills nav-stacked">
 			<li class="active"><a data-toggle="tab" href="#option">Opsi</a></li>
 			<li><a data-toggle="tab" href="#price">Harga</a></li>
-			<li><a data-toggle="tab" href="#resource">Resources</a></li>
+			<!-- <li><a data-toggle="tab" href="#resource">Resources</a></li> -->
 			<li><a data-toggle="tab" href="#facility">Fasilitas</a></li>
 			<li><a data-toggle="tab" href="#address">Alamat</a></li>
 		</ul>
 	</div>
-	<div class="col-md-9 p-r-0">
+	<div class="col-md-9">
 		<div class="tab-content">
 			<!-- price -->
 			<div id="price" class="tab-pane fade">
@@ -22,48 +22,50 @@
 				</div>
 				
 				<div class="custom-prices">
-					<table id="custom-prices" class="table table-striped table-hover">
-						<thead>
-							<tr>
-								<th>Tipe</th>
-								<th>Jangkauan</th>
-								<th>Harga</th>
-								<th>Prioritas</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tfoot>
-							<tr>
-								<th colspan="5">
-									<a href="#" class="btn btn-default add-row">Tambah baris</a>
-								</th>
-							</tr>
-						</tfoot>
-						<tbody>
-							<?php if ( ! empty($price)) : 
-							foreach ($price as $amount) : ?>
+					<div class="table-responsive">						
+						<table id="custom-prices" class="table table-striped table-hover">
+							<thead>
 								<tr>
-									<td>
-										<input class="price-id" type="hidden" name="<?php echo 'price['.$amount['id'].'][id]';?>" value="<?php echo $amount['id'];?>">
-										<?php echo price_type($amount['id'],$amount['type_id']); ?>
-									</td>
-									<td>
-										<input name="price[<?php echo $amount['id'];?>][start]" type="time" value="<?php echo $amount['start'];?>">s/d<input name="price[<?php echo $amount['id'];?>][end]" type="time" value="<?php echo $amount['end'];?>">
-									</td>
-									<td>
-										<span>[+]</span>
-										<input name="price[<?php echo $amount['id'];?>][price]" style="width: 5em" type="number" value="<?php echo $amount['price'];?>">
-									</td>
-									<td>
-										<input name="price[<?php echo $amount['id'];?>][priority]" style="width: 3em" type="number" value="<?php echo $amount['priority'];?>">
-									</td>
-									<td>
-										<a class="action-link text-danger del-row" href="#">del</a>
-									</td>
+									<th>Tipe</th>
+									<th>Jangkauan</th>
+									<th>Harga</th>
+									<th>Prioritas</th>
+									<th></th>
 								</tr>
-							<?php endforeach; endif;?>
-						</tbody>
-					</table>
+							</thead>
+							<tfoot>
+								<tr>
+									<th colspan="5">
+										<a href="#" class="btn btn-default add-row">Tambah baris</a>
+									</th>
+								</tr>
+							</tfoot>
+							<tbody>
+								<?php if ( ! empty($price)) : 
+								foreach ($price as $amount) : ?>
+									<tr>
+										<td>
+											<input class="price-id" type="hidden" name="<?php echo 'price['.$amount['id'].'][id]';?>" value="<?php echo $amount['id'];?>">
+											<?php echo price_type($amount['id'],$amount['type_id']); ?>
+										</td>
+										<td>
+											<input name="price[<?php echo $amount['id'];?>][start]" type="time" value="<?php echo $amount['start'];?>">s/d<input name="price[<?php echo $amount['id'];?>][end]" type="time" value="<?php echo $amount['end'];?>">
+										</td>
+										<td>
+											<span>[+]</span>
+											<input name="price[<?php echo $amount['id'];?>][price]" style="width: 5em" type="number" value="<?php echo $amount['price'];?>">
+										</td>
+										<td>
+											<input name="price[<?php echo $amount['id'];?>][priority]" style="width: 3em" type="number" value="<?php echo $amount['priority'];?>">
+										</td>
+										<td>
+											<a class="action-link text-danger del-row" href="#">del</a>
+										</td>
+									</tr>
+								<?php endforeach; endif;?>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 			<div id="option" class="tab-pane fade in active">
@@ -78,6 +80,12 @@
 						<label class="control-label col-md-4">Tutup</label>
 						<div class="col-md-6">
 							<input class="" type="time" name="option[close]" value="<?php echo $option['close'];?>">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-4">Tipe lantai</label>
+						<div class="col-md-6">
+							<input class="" type="floor" name="option[floor]" value="<?php echo $option['floor'];?>">
 						</div>
 					</div>
 					<div class="form-group">
@@ -103,7 +111,7 @@
 						</div>
 					</div>
 				</div>
-
+				<?php /*
 				<div class="resource">
 					<table id="resource" class="table table-striped table-hover">
 						<thead>
@@ -139,6 +147,7 @@
 					</table>
 				</div>	
 			</div>
+			*/ ?>
 			<div id="facility" class="tab-pane fade">
 				<div class="facility">
 					<div class="well">
@@ -154,11 +163,11 @@
 							<input class="facility-form facility-<?php echo $item['id']; ?>" name="facility[<?php echo $item['id']; ?>]" value="<?php echo $item['name']; ?>" type="hidden">
 						<?php endforeach; endif; ?>
 					</div>
-					<div class="form-horizontal">
+					<div class="form-inline">
 						<div class="form-group">
-							<div class="col-md-4">
-								<input class="form-control facility-input" type="text" data-toggle="tooltip" data-placement="top">
-							</div>
+							<input class="form-control facility-input" type="text" data-toggle="tooltip" data-placement="top">
+						</div>
+						<div class="form-group">
 							<a href="#" class="btn btn-default add-facility">Tambah</a>
 						</div>
 					</div>

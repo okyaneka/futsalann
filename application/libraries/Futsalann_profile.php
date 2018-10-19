@@ -38,14 +38,15 @@ class Futsalann_profile {
 	public function profile_meta($id='')
 	{
 		$data = $this->CI->muser->get($id);
+		$data['email'] = $this->CI->muser->get_email($id);
 		// nama
-		$profile = '<p><i class="fa fa-user p-r-15"></i>'.$data['meta']['firstname'].' '.$data['meta']['lastname'].'</p>';
+		$profile = '<p><i class="fa fa-user p-r-15"></i>'.$data['firstname'].' '.$data['lastname'].'</p>';
 		// email
 		$profile .= '<p><i class="fa fa-envelope p-r-15"></i>'.$data['email'].'</p>';
 		// alamat
-		$profile .= '<p><i class="fa fa-map p-r-15"></i>'.$data['meta']['street'].', '.$data['meta']['district'].', '.$data['meta']['city'].', '.$data['meta']['zip'].'</p>';
+		$profile .= '<p><i class="fa fa-map p-r-15"></i>'.$data['street'].', '.$data['district'].', '.$data['city'].', '.$data['zip'].'</p>';
 		// telepon
-		$profile .= '<p><i class="fa fa-phone p-r-15"></i>'.$data['meta']['phone'].'</p>';
+		$profile .= '<p><i class="fa fa-phone p-r-15"></i>'.$data['phone'].'</p>';
 
 		return $profile;
 	}
@@ -56,7 +57,7 @@ class Futsalann_profile {
 
 		if (! empty($id)) 
 		{
-			$photo = $this->CI->muser->get($id)['meta']['photo'];
+			$photo = $this->CI->muser->get($id)['photo'];
 			if (! empty($photo)) 
 			{
 				$photo = 'profiles/'.$photo;

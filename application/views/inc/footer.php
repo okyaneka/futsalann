@@ -43,5 +43,10 @@
 		</nav>
 	</div>
 	<?php my_foot(); ?>
+	<?php if(isset($script)) : ?>
+	<script type="text/javascript">
+		<?php echo $script;?>
+	</script>
+	<?php endif;?>
 </body>
 </html>
